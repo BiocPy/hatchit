@@ -2,6 +2,7 @@ import datetime
 import shutil
 import subprocess
 from pathlib import Path
+from warnings import warn
 
 __author__ = "Jayaram Kancherla"
 __copyright__ = "Jayaram Kancherla"
@@ -95,6 +96,7 @@ finally:
         git_name = subprocess.check_output(["git", "config", "user.name"], text=True).strip()
         git_email = subprocess.check_output(["git", "config", "user.email"], text=True).strip()
     except Exception as _:
+        warn("Git user.name and user.email not configured. Using default values.")
         git_name = "First Author"
         git_email = "first.author@example.com"
 
@@ -319,8 +321,20 @@ def test_import():
         check=True,
     )
 
-    subprocess.run(["git", "init"], cwd=project_path, check=True)
-    subprocess.run(["git", "add", "."], cwd=project_path, check=True)
-    subprocess.run(["git", "commit", "-m", "chore: initial setup"], cwd=project_path, check=True)
+    try:
+        subprocess.run(["git", "init"], cwd=project_path, check=True, capture_output=True)
+        subprocess.run(["git", "add", "."], cwd=project_path, check=True, capture_output=True)
+
+        # Check if git user config exists before committing
+        name_configured = subprocess.run(["git", "config", "user.name"], capture_output=True).returncode == 0
+        email_configured = subprocess.run(["git", "config", "user.email"], capture_output=True).returncode == 0
+
+        if name_configured and email_configured:
+            subprocess.run(
+                ["git", "commit", "-m", "chore: initial setup"], cwd=project_path, check=True, capture_output=True
+            )
+    except Exception:
+        warn("Git is not installed or not configured. Skipping git initialization and commit.")
+        pass
 
     print("hatchit complete! 🚀 💥")
