@@ -1,4 +1,4 @@
-# REPLACE_PROJECT_NAME
+# {{ project_name }}
 
 Add a short description here!
 

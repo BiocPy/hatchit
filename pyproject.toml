@@ -7,7 +7,7 @@ authors = [
     { name = "Jayaram Kancherla", email = "jayaram.kancherla@gmail.com" }
 ]
 requires-python = ">=3.12"
-dependencies = ["uv"]
+dependencies = ["uv", "copier>=9.0.0"]
 keywords = ["scaffold", "uv", "hatch", "project", "generator"]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -31,6 +31,10 @@ hatchit = "hatchit.cli:main"
 [build-system]
 requires = ["hatchling", "hatch-vcs"]
 build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel.force-include]
+"copier.yml" = "hatchit/copier.yml"
+"template" = "hatchit/template"
 
 [tool.hatch.version]
 source = "vcs"

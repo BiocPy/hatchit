@@ -1,0 +1,54 @@
+[project]
+name = "{{ project_name }}"
+dynamic = ["version"]
+description = "{{ description }}"
+readme = "README.md"
+requires-python = ">=3.12"
+authors = [
+    { name = "{{ author_name }}", email = "{{ author_email }}" }
+]
+
+[build-system]
+requires = ["hatchling", "hatch-vcs"]
+build-backend = "hatchling.build"
+
+[tool.hatch.version]
+source = "vcs"
+fallback-version = "0.1.0"
+
+[tool.ruff]
+line-length = 120
+src = ["src"]
+exclude = ["tests", "docs"]
+
+[tool.ruff.lint]
+extend-ignore = ["F821"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+
+[tool.ruff.format]
+docstring-code-format = true
+docstring-code-line-length = 20
+
+[tool.mypy]
+strict = true
+
+[tool.pytest.ini_options]
+addopts = "--cov --cov-report term-missing"
+testpaths = ["tests"]
+
+[dependency-groups]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "sphinx",
+    "myst-nb",
+    "furo",
+    "sphinx-autodoc-typehints",
+    "linkify-it-py",
+    "mypy"
+]

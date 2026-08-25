@@ -1,6 +1,5 @@
-import pytest
-from pathlib import Path
 from hatchit import create_hatchit_repository
+
 
 def test_create_hatchit_repository(tmp_path):
     project_path = tmp_path / "my_test_project"

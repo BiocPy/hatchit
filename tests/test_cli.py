@@ -1,6 +1,5 @@
-import pytest
 import subprocess
-from pathlib import Path
+
 
 def test_cli_execution(tmp_path):
     project_path = tmp_path / "cli_project"

@@ -34,7 +34,7 @@ except ImportError:
     from sphinx import apidoc
 
 output_dir = os.path.join(__location__, "api")
-module_dir = os.path.join(__location__, "../src/REPLACE_PROJECT_NAME")
+module_dir = os.path.join(__location__, "../src/{{ project_name|replace("-", "_") }}")
 try:
     shutil.rmtree(output_dir)
 except FileNotFoundError:
@@ -105,8 +105,8 @@ source_suffix = [".rst", ".md"]
 master_doc = "index"
 
 # General information about the project.
-project = "REPLACE_PROJECT_NAME"
-copyright = "2026, YOUR_NAME"
+project = "{{ project_name|replace("-", "_") }}"
+copyright = "2026, {{ author_name }}"
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -118,7 +118,7 @@ copyright = "2026, YOUR_NAME"
 # just set them both to the same value.
 try:
     from importlib.metadata import version as get_version
-    version = get_version("REPLACE_PROJECT_NAME")
+    version = get_version("{{ project_name|replace("-", "_") }}")
 except Exception:
     version = "unknown"
 
@@ -186,7 +186,7 @@ html_theme_options = {
         "color-brand-primary": "#4c9aff",
         "color-brand-content": "#4c9aff",
     },
-    "source_repository": "https://github.com/YOUR_ORG_OR_USERNAME/REPLACE_PROJECT_NAME",
+    "source_repository": "https://github.com/YOUR_ORG_OR_USERNAME/{{ project_name|replace("-", "_") }}",
     "source_branch": "main",
     "source_directory": "docs/",
 }
@@ -257,7 +257,7 @@ html_static_path = ["_static"]
 # html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = "REPLACE_PROJECT_NAME-doc"
+htmlhelp_basename = "{{ project_name|replace("-", "_") }}-doc"
 
 
 # -- Options for LaTeX output ------------------------------------------------
@@ -274,7 +274,7 @@ latex_elements = {
 # Grouping the document tree into LaTeX files. List of tuples
 # (source start file, target name, title, author, documentclass [howto/manual]).
 latex_documents = [
-    ("index", "user_guide.tex", "REPLACE_PROJECT_NAME Documentation", "YOUR_NAME", "manual")
+    ("index", "user_guide.tex", "{{ project_name|replace("-", "_") }} Documentation", "{{ author_name }}", "manual")
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
