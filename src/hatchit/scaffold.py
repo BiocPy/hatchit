@@ -66,6 +66,6 @@ def create_hatchit_repository(project_path: str, description: str, license: str)
         # Fallback for when the package is installed
         template_dir = Path(__file__).parent
 
-    copier.run_copy(str(template_dir), project_path, data=data, unsafe=True)
+    copier.run_copy(str(template_dir), project_path, data=data, vcs_ref="HEAD", unsafe=True)
     
     print("hatchit complete! 🚀 💥")
