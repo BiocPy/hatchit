@@ -22,4 +22,4 @@ def test_create_hatchit_repository(tmp_path):
     # Verify pyproject.toml name interpolation
     with open(project_path / "pyproject.toml") as f:
         content = f.read()
-        assert "my-test-project" in content
+        assert "my_test_project" in content

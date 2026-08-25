@@ -14,10 +14,17 @@ pip install hatchit
 
 ## Quickstart Tutorial
 
-To create a brand new repository, simply run the `hatchit` CLI command:
+To create a brand new repository, you can use the `hatchit` CLI command:
 
 ```bash
 hatchit my-awesome-package --description "A robust new tool" --license MIT
+```
+
+Alternatively, since `hatchit` is a 100% compatible Copier template, you can use `copier` directly to render the project!
+
+```bash
+pip install copier
+copier copy https://github.com/biocpy/hatchit my-awesome-package
 ```
 
 or to programmatically create a project,
