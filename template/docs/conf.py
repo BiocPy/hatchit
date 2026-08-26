@@ -8,9 +8,11 @@ copyright = "2026, {{ author_name }}"
 author = "{{ author_name }}"
 
 try:
-    from importlib.metadata import version
-    release = version(project)
+    from importlib.metadata import version as get_version
+    version = get_version(project)
+    release = version
 except Exception:
+    version = "unknown"
     release = "unknown"
 
 extensions = [
