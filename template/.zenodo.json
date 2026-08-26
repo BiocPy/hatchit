@@ -1,9 +1,9 @@
 {
-  "title": "REPLACE_PROJECT_NAME",
-  "description": "REPLACE_DESCRIPTION",
+  "title": "{{ project_name }}",
+  "description": "{{ description }}",
   "creators": [
     {
-      "name": "YOUR_NAME",
+      "name": "{{ author_name }}",
       "affiliation": "YOUR_AFFILIATION",
       "orcid": "0000-0000-0000-0000"
     }

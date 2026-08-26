@@ -1,0 +1,23 @@
+[![PyPI-Server](https://img.shields.io/pypi/v/{{ project_name }}.svg)](https://pypi.org/project/{{ project_name }}/)
+![Unit tests](https://github.com/{{ github_username }}/{{ project_name }}/actions/workflows/run-tests.yml/badge.svg)
+
+# {{ project_name }}
+
+> {{ description }}
+
+A longer description of your project goes here...
+
+## Install
+
+To get started, install the package from [PyPI](https://pypi.org/project/{{ project_name }}/)
+
+```bash
+pip install {{ project_name }}
+```
+
+<!-- hatchit-notes -->
+
+## Note
+
+This project has been set up using [hatchit](https://github.com/biocpy/hatchit)
+and [uv](https://docs.astral.sh/uv/).

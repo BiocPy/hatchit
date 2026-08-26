@@ -3,9 +3,9 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../src"))
 
-project = "hatchit"
-copyright = "2026, Jayaram Kancherla"
-author = "Jayaram Kancherla"
+project = "{{ project_name|replace('-', '_') }}"
+copyright = "2026, {{ author_name }}"
+author = "{{ author_name }}"
 
 try:
     from importlib.metadata import version as get_version

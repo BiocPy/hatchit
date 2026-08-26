@@ -1,0 +1,49 @@
+_subdirectory: template
+
+# Project Info
+project_name:
+  type: str
+  help: Name of the project (e.g. my-awesome-package)
+python_package_name:
+  type: str
+  default: "{{ project_name|replace('-', '_') }}"
+  when: false
+description:
+  type: str
+  default: "Add a short description here!"
+  help: Short description of the project
+license:
+  type: str
+  default: MIT
+  help: License for the project
+  choices:
+    "Permissive - MIT": "MIT"
+    "Permissive - BSD-3-Clause": "BSD-3-Clause"
+    "Permissive - Apache-2.0": "Apache-2.0"
+    "Copyleft - GPL-3.0": "GPL-3.0-only"
+copyright_year:
+  type: str
+  default: "{{ '%Y' | strftime }}"
+  help: "What is the starting year of the project? Used in copyright statements."
+
+# Author Info
+author_name:
+  type: str
+  default: "First Author"
+  help: Name of the author
+author_email:
+  type: str
+  default: "first.author@example.com"
+  help: Email of the author
+github_username:
+  type: str
+  default: "YOUR_ORG_OR_USERNAME"
+  help: GitHub Organization or Username
+
+# Tasks to run after generation
+_tasks:
+  - "uv lock"
+  - "git init"
+  - "git add ."
+  # Use ignore_errors because git commit might fail if git user isn't configured, or we can just run it.
+  - "git commit -m 'chore: initial setup' || true"
