@@ -1,4 +1,4 @@
-# hatchit 🚀
+# hatchit
 
 A modern, Python project scaffolder combining the blazing speed of `uv` with the robust build ecosystem of `hatch`. 
 
