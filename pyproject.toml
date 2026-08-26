@@ -8,7 +8,7 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = ["uv", "copier>=9.0.0"]
-keywords = ["scaffold", "uv", "hatch", "project", "generator"]
+keywords = ["scaffold", "uv", "hatch", "project", "generator", "template", "copier", "packaging", "pypi"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Programming Language :: Python :: 3",
@@ -22,8 +22,10 @@ classifiers = [
 ]
 
 [project.urls]
+Homepage = "https://github.com/biocpy/hatchit"
+Documentation = "https://biocpy.github.io/hatchit"
 Repository = "https://github.com/biocpy/hatchit"
-Issues = "https://github.com/biocpy/hatchit/issues"
+"Bug Tracker" = "https://github.com/biocpy/hatchit/issues"
 
 [project.scripts]
 hatchit = "hatchit.cli:main"
