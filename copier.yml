@@ -4,6 +4,10 @@ _subdirectory: template
 project_name:
   type: str
   help: Name of the project (e.g. my-awesome-package)
+python_package_name:
+  type: str
+  default: "{{ project_name|replace('-', '_') }}"
+  when: false
 description:
   type: str
   default: "Add a short description here!"
