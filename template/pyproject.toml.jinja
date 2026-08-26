@@ -14,7 +14,15 @@ keywords = [
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: {{ license }} License",
+{%- if license == "MIT" %}
+    "License :: OSI Approved :: MIT License",
+{%- elif license == "BSD-3-Clause" %}
+    "License :: OSI Approved :: BSD License",
+{%- elif license == "Apache-2.0" %}
+    "License :: OSI Approved :: Apache Software License",
+{%- elif license == "GPL-3.0-only" %}
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+{%- endif %}
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",

@@ -12,6 +12,15 @@ license:
   type: str
   default: MIT
   help: License for the project
+  choices:
+    "Permissive - MIT": "MIT"
+    "Permissive - BSD-3-Clause": "BSD-3-Clause"
+    "Permissive - Apache-2.0": "Apache-2.0"
+    "Copyleft - GPL-3.0": "GPL-3.0-only"
+copyright_year:
+  type: str
+  default: "{{ '%Y' | strftime }}"
+  help: "What is the starting year of the project? Used in copyright statements."
 
 # Author Info
 author_name:
