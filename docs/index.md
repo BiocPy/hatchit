@@ -19,6 +19,7 @@ Check out the [Overview](readme.md) for more detailed instructions and tutorials
 Home <self>
 readme
 setup
+tutorial
 development
 publishing
 API <api/modules>
