@@ -20,8 +20,8 @@ permissions:
 
 concurrency:
   group: >-
-    ${{ github.workflow }}-${{ github.ref_type }}-
-    ${{ github.event.pull_request.number || github.sha }}
+    {% raw %}${{ github.workflow }}{% endraw %}-{% raw %}${{ github.ref_type }}{% endraw %}-
+    {% raw %}${{ github.event.pull_request.number || github.sha }}{% endraw %}
   cancel-in-progress: true
 
 jobs:
@@ -33,45 +33,53 @@ jobs:
           - ubuntu-latest
           - macos-latest
           - windows-latest
-    runs-on: ${{ matrix.platform }}
-    name: Python ${{ matrix.python }}, ${{ matrix.platform }}
+    runs-on: {% raw %}${{ matrix.platform }}{% endraw %}
+    name: Python {% raw %}${{ matrix.python }}{% endraw %}, {% raw %}${{ matrix.platform }}{% endraw %}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
+{% if use_uv %}
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+{% endif %}
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: ${{ matrix.python }}
+          python-version: {% raw %}${{ matrix.python }}{% endraw %}
 
+{% if use_uv %}
       - name: Install tox
         run: uv tool install tox --with tox-uv
 
       - name: Install dependencies
-        run: uv sync --all-extras --python ${{ matrix.python }}
+        run: uv sync --all-extras --python {% raw %}${{ matrix.python }}{% endraw %}
+{% else %}
+      - name: Install tox
+        run: python -m pip install tox coverage
+{% endif %}
 
       - name: Run tests
-        run: |
-          tox -e default -- --cov --cov-branch --cov-report=xml
+        run: >-
+          tox
+          -- -rFEx --durations 10 --color yes --cov --cov-branch --cov-report=xml  # pytest args
 
       - name: Check for codecov token availability
         id: codecov-check
         shell: bash
         run: |
-          if [ ${{ secrets.CODECOV_TOKEN }} != '' ]; then
+          if [ {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %} != '' ]; then
             echo "codecov=true" >> $GITHUB_OUTPUT;
           else
             echo "codecov=false" >> $GITHUB_OUTPUT;
           fi
 
       - name: Upload coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v5
-        if: ${{ steps.codecov-check.outputs.codecov == 'true' }}
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
-          slug: ${{ github.repository }}
-          flags: ${{ matrix.platform }} - py${{ matrix.python }}
+        uses: codecov/codecov-action@v7
+        if: {% raw %}${{ steps.codecov-check.outputs.codecov == 'true' }}{% endraw %}
+        with:
+          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+          slug: {% raw %}${{ github.repository }}{% endraw %}
+          flags: {% raw %}${{ matrix.platform }}{% endraw %} - py{% raw %}${{ matrix.python }}{% endraw %}

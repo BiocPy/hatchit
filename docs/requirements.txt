@@ -1,0 +1,5 @@
+sphinx>=7.0.0
+furo
+myst-nb
+sphinx-autodoc-typehints
+linkify-it-py

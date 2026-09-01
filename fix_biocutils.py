@@ -1,4 +1,22 @@
-# Tox configuration file using uv as the backend runner
+import re
+from pathlib import Path
+
+repo = Path("/home/jayaram/Projects/biocpy/biocutils")
+
+# 1. Fix pyproject.toml
+pyproj = repo / "pyproject.toml"
+with open(pyproj, "r") as f:
+    content = f.read()
+
+# Remove the duplicate dev group
+content = re.sub(r'\[project\.optional-dependencies\]\ndev = \[\n(    ".*?",\n)*\]\n?', '', content)
+with open(pyproj, "w") as f:
+    f.write(content.strip() + "\n")
+
+
+# 2. Fix tox.ini
+tox_ini = repo / "tox.ini"
+tox_content = """# Tox configuration file
 # Read more under https://tox.wiki/
 
 [tox]
@@ -12,8 +30,8 @@ commands =
     pytest {posargs}
 
 [testenv:typecheck]
-deps = mypy
 description = Run static type checking with mypy
+deps = mypy
 commands =
     mypy src/
 
@@ -60,3 +78,18 @@ skip_install = True
 deps = twine
 commands =
     python -m twine upload {posargs:dist/*}
+"""
+with open(tox_ini, "w") as f:
+    f.write(tox_content)
+
+# 3. Fix run-tests.yml
+run_tests = repo / ".github" / "workflows" / "run-tests.yml"
+with open(run_tests, "r") as f:
+    content = f.read()
+
+content = re.sub(r'\n\s*- name: Set up uv\n\s*uses: astral-sh/setup-uv@v5\n\s*with:\n\s*enable-cache: true\n', '', content)
+content = content.replace("uv tool install tox --with tox-uv", "python -m pip install tox")
+content = re.sub(r'\n\s*- name: Install dependencies\n\s*run: uv sync --all-extras --python \$\{\{ matrix\.python \}\}\n', '', content)
+with open(run_tests, "w") as f:
+    f.write(content)
+

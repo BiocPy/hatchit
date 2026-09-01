@@ -20,4 +20,7 @@ pip install {{ project_name }}
 ## Note
 
 This project has been set up using [hatchit](https://github.com/biocpy/hatchit)
+{%- if use_uv %}
 and [uv](https://docs.astral.sh/uv/).
+{%- else %}.
+{%- endif %}
