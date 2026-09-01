@@ -70,6 +70,7 @@ strict = true
 addopts = "--cov --cov-report term-missing"
 testpaths = ["tests"]
 
+{% if use_uv %}
 [dependency-groups]
 dev = [
     "pytest",
@@ -81,3 +82,16 @@ dev = [
     "linkify-it-py",
     "mypy"
 ]
+{% else %}
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "sphinx",
+    "myst-nb",
+    "furo",
+    "sphinx-autodoc-typehints",
+    "linkify-it-py",
+    "mypy"
+]
+{% endif %}

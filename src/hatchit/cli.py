@@ -14,6 +14,7 @@ def main():
     parser.add_argument("project_path", help="Path where the new project should be created.")
     parser.add_argument("--description", default="Add a short description here!", help="Optional project description.")
     parser.add_argument("--license", default="MIT", help="License to use. Defaults to MIT.")
+    parser.add_argument("--use-uv", action="store_true", help="Use uv for dependency management and tox running.")
 
     args = parser.parse_args()
 
@@ -24,7 +25,7 @@ def main():
         sys.exit(1)
 
     print(f"Hatching project at {project_path}...")
-    create_hatchit_repository(project_path=project_path, description=args.description, license=args.license)
+    create_hatchit_repository(project_path=project_path, description=args.description, license=args.license, use_uv=args.use_uv)
     print("Success! 🚀 💥")
 
 

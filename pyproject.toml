@@ -99,14 +99,8 @@ testpaths = [
     "tests",
 ]
 
-[dependency-groups]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "sphinx",
-    "myst-nb",
-    "furo",
-    "sphinx-autodoc-typehints",
-    "linkify-it-py",
-    "mypy",
+[project.optional-dependencies]
+testing = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
 ]

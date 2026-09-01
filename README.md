@@ -20,6 +20,12 @@ To create a brand new repository, you can use the `hatchit` CLI command:
 hatchit my-awesome-package --description "A robust new tool" --license MIT
 ```
 
+By default, `hatchit` builds standard `tox` environments with pip installation. If you want to use the blazing fast `uv` ecosystem instead, just add `--use-uv`:
+
+```bash
+hatchit my-awesome-package --description "A robust new tool" --license MIT --use-uv
+```
+
 Alternatively, since `hatchit` is a 100% compatible Copier template, you can use `copier` directly to render the project!
 
 ```bash
@@ -50,12 +56,14 @@ That's it! You're ready to start writing code.
 
 ## Development Process
 
-`hatchit` structures your project around `tox` and `uv`. To run your tests during development:
+`hatchit` structures your project around `tox` for automated testing. To run your tests during development:
 
 ```bash
 cd my-awesome-package
 tox -e default
 ```
+
+If you configured the project with `--use-uv`, tox will automatically use `uv` under the hood!
 
 To build your documentation locally and preview:
 ```bash

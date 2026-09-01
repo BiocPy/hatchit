@@ -11,18 +11,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+{% if use_uv %}
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+{% endif %}
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
+{% if use_uv %}
       - name: Install tox
         run: uv tool install tox --with tox-uv
+{% else %}
+      - name: Install tox
+        run: python -m pip install tox
+{% endif %}
 
       - name: Test
         run: tox -e default
@@ -42,18 +49,25 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
+{% if use_uv %}
       - name: Set up uv
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+{% endif %}
 
       - name: Set up Python 3.12
         uses: actions/setup-python@v5
         with:
           python-version: 3.12
 
+{% if use_uv %}
       - name: Install tox
         run: uv tool install tox --with tox-uv
+{% else %}
+      - name: Install tox
+        run: python -m pip install tox
+{% endif %}
 
       - name: Build docs
         run: tox -e docs
@@ -94,7 +108,7 @@ jobs:
       id-token: write
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw %}
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

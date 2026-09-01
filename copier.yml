@@ -39,10 +39,14 @@ github_username:
   type: str
   default: "YOUR_ORG_OR_USERNAME"
   help: GitHub Organization or Username
+use_uv:
+  type: bool
+  default: false
+  help: "Use uv for dependency management and tox running?"
 
 # Tasks to run after generation
 _tasks:
-  - "uv lock"
+  - "{% if use_uv %}uv lock{% else %}echo Skip uv lock{% endif %}"
   - "git init"
   - "git add ."
   # Use ignore_errors because git commit might fail if git user isn't configured, or we can just run it.

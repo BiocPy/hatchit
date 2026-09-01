@@ -8,7 +8,7 @@ __copyright__ = "Jayaram Kancherla"
 __license__ = "MIT"
 
 
-def create_hatchit_repository(project_path: str, description: str, license: str) -> None:
+def create_hatchit_repository(project_path: str, description: str, license: str, use_uv: bool = False) -> None:
     """Create a new Python project using uv and hatch.
 
     This function initializes a new Python project at the specified `project_path`
@@ -24,6 +24,9 @@ def create_hatchit_repository(project_path: str, description: str, license: str)
 
         license:
             The license to use for the project.
+
+        use_uv:
+            Whether to use uv for dependency management. Defaults to False.
 
     Example:
         >>> create_hatchit_repository(
@@ -59,6 +62,7 @@ def create_hatchit_repository(project_path: str, description: str, license: str)
         "author_name": git_name,
         "author_email": git_email,
         "github_username": github_username,
+        "use_uv": use_uv,
     }
 
     template_dir = Path(__file__).parent.parent.parent
