@@ -38,6 +38,10 @@ classifiers = [
     "Topic :: Software Development :: Code Generators",
 ]
 
+
+[project.license]
+file = "LICENSE.txt"
+
 [project.urls]
 Homepage = "https://github.com/biocpy/hatchit"
 Documentation = "https://biocpy.github.io/hatchit"
@@ -104,3 +108,7 @@ testing = [
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
 ]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B110"]

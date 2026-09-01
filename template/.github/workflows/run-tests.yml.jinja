@@ -36,7 +36,7 @@ jobs:
     runs-on: {% raw %}${{ matrix.platform }}{% endraw %}
     name: Python {% raw %}${{ matrix.python }}{% endraw %}, {% raw %}${{ matrix.platform }}{% endraw %}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
 {% if use_uv %}
       - name: Set up uv
@@ -58,12 +58,13 @@ jobs:
         run: uv sync --all-extras --python {% raw %}${{ matrix.python }}{% endraw %}
 {% else %}
       - name: Install tox
-        run: python -m pip install tox
+        run: python -m pip install tox coverage
 {% endif %}
 
       - name: Run tests
         run: |
-          tox -e default -- --cov --cov-branch --cov-report=xml
+          tox \
+          -- -rFEx --durations 10 --color yes --cov --cov-branch --cov-report=xml  # pytest args
 
       - name: Check for codecov token availability
         id: codecov-check
@@ -76,9 +77,9 @@ jobs:
           fi
 
       - name: Upload coverage reports to Codecov with GitHub Action
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         if: {% raw %}${{ steps.codecov-check.outputs.codecov == 'true' }}{% endraw %}
-        env:
-          CODECOV_TOKEN: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
+        with:
+          token: {% raw %}${{ secrets.CODECOV_TOKEN }}{% endraw %}
           slug: {% raw %}${{ github.repository }}{% endraw %}
           flags: {% raw %}${{ matrix.platform }}{% endraw %} - py{% raw %}${{ matrix.python }}{% endraw %}
