@@ -62,8 +62,8 @@ jobs:
 {% endif %}
 
       - name: Run tests
-        run: |
-          tox \
+        run: >-
+          tox
           -- -rFEx --durations 10 --color yes --cov --cov-branch --cov-report=xml  # pytest args
 
       - name: Check for codecov token availability
