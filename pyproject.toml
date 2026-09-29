@@ -10,12 +10,10 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "uv",
     "copier>=9.0.0",
 ]
 keywords = [
     "scaffold",
-    "uv",
     "hatch",
     "project",
     "generator",
