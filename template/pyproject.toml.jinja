@@ -31,6 +31,9 @@ classifiers = [
     "Programming Language :: Python :: 3.14",
 ]
 
+[project.license]
+file = "LICENSE.md"
+
 [project.urls]
 Homepage = "https://github.com/{{ github_username }}/{{ project_name }}"
 Documentation = "https://github.com/{{ github_username }}/{{ project_name }}"
@@ -67,9 +70,10 @@ docstring-code-line-length = 20
 strict = true
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term-missing"
+addopts = "--cov={{ project_name|replace('-', '_') }} --cov-report term-missing"
 testpaths = ["tests"]
 
+{% if use_uv %}
 [dependency-groups]
 dev = [
     "pytest",
@@ -80,4 +84,45 @@ dev = [
     "sphinx-autodoc-typehints",
     "linkify-it-py",
     "mypy"
+]
+{% else %}
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-cov",
+    "sphinx",
+    "myst-nb",
+    "furo",
+    "sphinx-autodoc-typehints",
+    "linkify-it-py",
+    "mypy"
+]
+{% endif %}
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B110"]
+
+[tool.coverage.run]
+source_pkgs = ["{{ project_name|replace('-', '_') }}"]
+branch = true
+parallel = true
+omit = ["tests/*"]
+disable_warnings = ["module-not-measured"]
+
+[tool.coverage.paths]
+{{ project_name|replace('-', '_') }} = [
+    "src/{{ project_name|replace('-', '_') }}",
+    "*/site-packages/{{ project_name|replace('-', '_') }}"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self\\.debug",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
 ]

@@ -19,6 +19,20 @@ def test_cli_execution(tmp_path):
     assert (project_path / "pyproject.toml").exists()
     assert (project_path / "CITATION.cff").exists()
     
+    # Run the CLI with --use-uv
+    project_path_uv = tmp_path / "cli_project_uv"
+    result_uv = subprocess.run(
+        ["hatchit", str(project_path_uv), "--description", "Test CLI package", "--use-uv"],
+        capture_output=True,
+        text=True
+    )
+    
+    assert result_uv.returncode == 0
+    assert "Hatching project" in result_uv.stdout
+    assert (project_path_uv / "pyproject.toml").exists()
+    with open(project_path_uv / "pyproject.toml") as f:
+        assert "[dependency-groups]" in f.read()
+    
     # Test error on non-empty directory
     (project_path / "extra.txt").touch()
     result_fail = subprocess.run(

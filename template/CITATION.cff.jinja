@@ -1,10 +1,11 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite it as below."
 authors:
+{%- set names = author_name.split(' ', 1) %}
 - family-names: "{% if names|length > 1 %}{{ names[1] }}{% endif %}"
-  given-names: "{% set names = author_name.split(' ', 1) %}{{ names[0] }}"
+  given-names: "{{ names[0] }}"
   orcid: "https://orcid.org/0000-0000-0000-0000"
 title: "{{ project_name }}"
 version: 0.1.0
-date-released: {% now 'utc', '%Y-%m-%d' %}
-url: "https://github.com/YOUR_ORG_OR_USERNAME/{{ project_name }}"
+date-released: {{ "%Y-%m-%d" | strftime }}
+url: "https://github.com/{{ github_username }}/{{ project_name }}"

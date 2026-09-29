@@ -10,12 +10,10 @@ authors = [
 ]
 requires-python = ">=3.10"
 dependencies = [
-    "uv",
     "copier>=9.0.0",
 ]
 keywords = [
     "scaffold",
-    "uv",
     "hatch",
     "project",
     "generator",
@@ -37,6 +35,10 @@ classifiers = [
     "Intended Audience :: Developers",
     "Topic :: Software Development :: Code Generators",
 ]
+
+
+[project.license]
+file = "LICENSE.md"
 
 [project.urls]
 Homepage = "https://github.com/biocpy/hatchit"
@@ -94,19 +96,42 @@ docstring-code-line-length = 20
 strict = true
 
 [tool.pytest.ini_options]
-addopts = "--cov --cov-report term-missing"
+addopts = "--cov=hatchit --cov-report term-missing"
 testpaths = [
     "tests",
 ]
 
-[dependency-groups]
-dev = [
-    "pytest",
-    "pytest-cov",
-    "sphinx",
-    "myst-nb",
-    "furo",
-    "sphinx-autodoc-typehints",
-    "linkify-it-py",
-    "mypy",
+[project.optional-dependencies]
+testing = [
+    "pytest>=9.1.1",
+    "pytest-cov>=7.1.0",
+    "uv",
+]
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = ["B110"]
+
+[tool.coverage.run]
+source_pkgs = ["hatchit"]
+branch = true
+parallel = true
+omit = ["tests/*"]
+disable_warnings = ["module-not-measured"]
+
+[tool.coverage.paths]
+hatchit = [
+    "src/hatchit",
+    "*/site-packages/hatchit"
+]
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "def __repr__",
+    "if self\\.debug",
+    "raise AssertionError",
+    "raise NotImplementedError",
+    "if 0:",
+    "if __name__ == .__main__.:"
 ]
