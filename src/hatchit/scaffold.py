@@ -46,12 +46,9 @@ def create_hatchit_repository(project_path: str, description: str, license: str,
         git_name = "First Author"
         git_email = "first.author@example.com"
         
-    try:
-        # Check if gh CLI is installed for github username, or extract from remote if any.
-        # Defaults to a placeholder
-        github_username = "YOUR_ORG_OR_USERNAME"
-    except Exception:
-        github_username = "YOUR_ORG_OR_USERNAME"
+    # Check if gh CLI is installed for github username, or extract from remote if any.
+    # Defaults to a placeholder
+    github_username = "YOUR_ORG_OR_USERNAME"
 
     proj_name = Path(project_path).parts[-1]
 

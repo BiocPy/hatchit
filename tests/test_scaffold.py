@@ -42,3 +42,39 @@ def test_create_hatchit_repository_with_uv(tmp_path):
         assert "my_uv_project" in content
         assert "[dependency-groups]" in content
         assert "[project.optional-dependencies]" not in content
+
+def test_create_hatchit_repository_none_description_and_exceptions(tmp_path):
+    project_path = tmp_path / "my_edge_project"
+    
+    import subprocess
+    from unittest.mock import patch
+    
+    with patch("subprocess.check_output", side_effect=Exception("Git failed")):
+        create_hatchit_repository(
+            project_path=str(project_path),
+            description=None,
+            license="MIT"
+        )
+    
+    assert (project_path / "pyproject.toml").exists()
+
+def test_create_hatchit_repository_fallback_template_dir(tmp_path):
+    project_path = tmp_path / "my_fallback_project"
+    
+    from pathlib import Path
+    from unittest.mock import patch
+    
+    original_exists = Path.exists
+    def mock_exists(self):
+        if self.name == "copier.yml":
+            return False
+        return original_exists(self)
+        
+    with patch.object(Path, "exists", mock_exists):
+        create_hatchit_repository(
+            project_path=str(project_path),
+            description="Fallback",
+            license="MIT"
+        )
+    
+    assert (project_path / "pyproject.toml").exists()
