@@ -43,6 +43,9 @@ use_uv:
   type: bool
   default: false
   help: "Use uv for dependency management and tox running?"
+  choices:
+    "No": false
+    "Yes": true
 
 # Tasks to run after generation
 _tasks:
