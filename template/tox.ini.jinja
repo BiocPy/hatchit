@@ -68,7 +68,7 @@ envlist = default
 
 [testenv]
 description = Invoke pytest to run automated tests
-extras = testing
+extras = dev
 commands =
     pytest {posargs}
 
@@ -102,8 +102,7 @@ description =
     docs: Invoke sphinx-build to build the docs
     doctests: Invoke sphinx-build to run doctests
     linkcheck: Check for broken links in the documentation
-deps =
-    -r {toxinidir}/docs/requirements.txt
+
 setenv =
     DOCSDIR = {toxinidir}/docs
     BUILDDIR = {toxinidir}/docs/_build
