@@ -40,7 +40,7 @@ classifiers = [
 
 
 [project.license]
-file = "LICENSE.txt"
+file = "LICENSE.md"
 
 [project.urls]
 Homepage = "https://github.com/biocpy/hatchit"
